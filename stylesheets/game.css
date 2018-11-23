@@ -17,3 +17,16 @@ th {
     bottom: 4em;
     padding:.3em;
 }
+
+.player1 {
+    position: absolute;
+    left: 28em;
+    bottom: 5em;
+}
+
+.player2 {
+    position: absolute;
+    left: 26.5em;
+    bottom: 5em;
+}
+

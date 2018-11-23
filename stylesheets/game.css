@@ -1,0 +1,12 @@
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    height: 80px;
+    width: 700px;
+    background-color: powderblue;
+}
+
+th {
+    text-align: left;
+    vertical-align: top;
+}

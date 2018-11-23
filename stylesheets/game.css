@@ -10,3 +10,10 @@ th {
     text-align: left;
     vertical-align: top;
 }
+
+.GG {
+    position: absolute;
+    right: 20em;
+    bottom: 4em;
+    padding:.3em;
+}

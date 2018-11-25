@@ -1,8 +1,15 @@
+html *
+{
+   font-size: 1em !important;
+   color: #000 !important;
+   font-family: Arial !important;
+}
+
 table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
-    height: 80px;
-    width: 700px;
+    height: 70px;
+    width: 600px;
     background-color: powderblue;
 }
 
@@ -12,7 +19,7 @@ th {
 }
 
 .GG {
-    position: absolute;
+    position: fixed;
     right: 20em;
     bottom: 4em;
     padding:.3em;
@@ -28,5 +35,12 @@ th {
     position: absolute;
     left: 26.5em;
     bottom: 5em;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 100px 100px 100px;
+    grid-gap: 10px;
 }
 

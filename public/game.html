@@ -9,83 +9,84 @@
 </head>
 <body>
     <h1 align="center"><strong>Snake alert!</strong></h1>
-    <table align="center">
-        <tr>
-            <th>43</th>
-            <th>44</th>
-            <th>45</th>
-            <th>46</th>
-            <th>47</th>
-            <th>48</th>
-            <th>49</th>
-        </tr>
-        <tr>
-            <th>42</th>
-            <th>41</th>
-            <th>40</th>
-            <th>39</th>
-            <th>38</th>
-            <th>37</th>
-            <th>36</th>
-        </tr>
-        <tr>
-            <th>29</th>
-            <th>30</th>
-            <th>31</th>
-            <th>32</th>
-            <th>33</th>
-            <th>34</th>
-            <th>35</th>
-        </tr>
-        <tr>
-            <th>28</th>
-            <th>27</th>
-            <th>26</th>
-            <th>25</th>
-            <th>24</th>
-            <th>23</th>
-            <th>22</th>
-        </tr>
-        <tr>
-            <th>15</th>
-            <th>16</th>
-            <th>17</th>
-            <th>18</th>
-            <th>19</th>
-            <th>20</th>
-            <th>21</th>
-        </tr>
-        <tr>
-            <th>14</th>
-            <th>13</th>
-            <th>12</th>
-            <th>11</th>
-            <th>10</th>
-            <th>9</th>
-            <th>8</th>
-        </tr>
-        <tr>
-            <th>1</th>
-            <th>2</th>
-            <th>3</th>
-            <th>4</th>
-            <th>5</th>
-            <th>6</th>
-            <th>7</th>
-        </tr>
-    </table>
-    <div class="GG">
-        <a href="splash.html"><button><font size="10" color="red">GG</font></button></a>
-    </div>
-    <div class="player1">
-        <img src="images/playerRed.png" alt="player 1" height="30" width="20">
-    </div>
-    <div class="player2">
-        <img src="images/playerGreen.png" alt="player 2" height="30" width="20">
-    </div>
-    <div class="grid">
-        <div class="item"></div>
-    </div>
-    
+    <section id="board">
+      <div id="49" class="board"> 49 </div>
+      <div id="48" class="board"> 48 </div>
+      <div id="47" class="board"> 47 </div>
+      <div id="46" class="board"> 46 </div>
+      <div id="45" class="board"> 45 </div>
+      <div id="44" class="board"> 44 </div>
+      <div id="43" class="board"> 43 </div>
+      <div id="42" class="board"> 42 </div>
+      <div id="41" class="board"> 41 </div>
+      <div id="40" class="board"> 40 </div>
+      <div id="39" class="board"> 39 </div>
+      <div id="38" class="board"> 38 </div>
+      <div id="37" class="board"> 37 </div>
+      <div id="36" class="board"> 36 </div>
+      <div id="35" class="board"> 35 </div>
+      <div id="34" class="board"> 34 </div>
+      <div id="33" class="board"> 33 </div>
+      <div id="32" class="board"> 32 </div>
+      <div id="31" class="board"> 31 </div>
+      <div id="30" class="board"> 30 </div>
+      <div id="29" class="board"> 29 </div>
+      <div id="28" class="board"> 28 </div>
+      <div id="27" class="board"> 27 </div>
+      <div id="26" class="board"> 26 </div>
+      <div id="25" class="board"> 25 </div>
+      <div id="24" class="board"> 24 </div>
+      <div id="23" class="board"> 23 </div>
+      <div id="22" class="board"> 22 </div>
+      <div id="21" class="board"> 21 </div>
+      <div id="20" class="board"> 20 </div>
+      <div id="19" class="board"> 19 </div>
+      <div id="18" class="board"> 18 </div>
+      <div id="17" class="board"> 17 </div>
+      <div id="16" class="board"> 16 </div>
+      <div id="15" class="board"> 15 </div>
+      <div id="14" class="board"> 14 </div>
+      <div id="13" class="board"> 13 </div>
+      <div id="12" class="board"> 12 </div>
+      <div id="11" class="board"> 11 </div>
+      <div id="10" class="board"> 10 </div>
+      <div id="9" class="board"> 9 </div>
+      <div id="8" class="board"> 8 </div>
+      <div id="7" class="board"> 7 </div>
+      <div id="6" class="board"> 6 </div>
+      <div id="5" class="board"> 5 </div>
+      <div id="4" class="board"> 4 </div>
+      <div id="3" class="board"> 3 </div>
+      <div id="2" class="board"> 2 </div>
+      <div id="1" class="board"> 1 </div>
+    </section>
+
+    <section id="game">
+      <div id="status">
+          <span id="statusbar"></span>
+      </div>
+      <div class="GG">
+          <a href="splash.html"><button><font size="10" color="red">GG</font></button></a>
+      </div>
+      <div class="dice">
+        <span id="dice"></span>
+      </div>
+      <div class="player1">
+          <img src="images/playerRed.png" alt="player 1" height="30" width="20">
+      </div>
+      <div class="player2">
+          <img src="images/playerGreen.png" alt="player 2" height="30" width="20">
+      </div>
+    </section>
+
+
+
+    <script src="javascripts/config.js"></script>
+    <script src="javascripts/statuses.js"></script>
+    <script src="javascripts/messages.js"></script>
+    <script src="javascripts/board.js"></script>
+    <script src="javascripts/ui-right.js"></script>
+    <script src="javascripts/interactions.js"></script>
+
 </body>
 </html>

@@ -1,24 +1,23 @@
-function rollDice(){
-  let div = document.getElementById("dice");
 
+function rollDice(){
+  var div = document.getElementsByClassNameByClass("dice")[0];
 }
 
 function movePlayerByOneGrid(){
-  if(this.currentPosition++ !== 49)}
+  if(this.currentPosition++ !== 49){
     this.currentPosition++;
   }
-  else if(this.currentPosition++ ===)
+  else if(this.currentPosition++ === 49){}
 }
 
 function iterateMove() {
-  
+
 }
 
 /*
  * Object representing the status bar.
  */
-function StatusBar(){
-    this.setStatus = function(status){
-        document.getElementById("statusbar").innerHTML = status;
-    };
-}
+
+
+
+console.log(rollDice());

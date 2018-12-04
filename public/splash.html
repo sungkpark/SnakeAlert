@@ -44,7 +44,7 @@
 
         // Get live statistics updates every second while in splash
         setInterval(function() {
-            if(status=="SPLASH"){    
+            if(status=="SPLASH"){
                 getStats();
             }else{
                 clearInterval();
@@ -70,8 +70,8 @@
             const json = JSON.stringify(game);
             socket.send(json);
         }
-        
-        // Create a random name 
+
+        // Create a random name
         $(document).ready(function(){
             const rNumber = Math.floor((Math.random() * 10000) + 1);
             $("#pName").attr("value", "Guest" + rNumber);
@@ -81,20 +81,8 @@
 <body>
     <h1 align="center">Snakes & Ladders</h1>
     <section>
-        
+
         <h2 align="center">Number of players</h2>
-<<<<<<< HEAD
-        <div class="numPlayers">
-            <button><font size="10">II</font></button>
-            <button><font size="10">III</font></button>
-            <button><font size="10">IV</font></button>
-        </div>
-    </section>
-    <section>
-      <h2 align="center">Number of players in lobby</h2>
-    </section>
-    <br><br><br><br><br>
-=======
         <div class="numPlayers"> 
             <input type="radio" name="numPlayers" value="2" id="radio2" checked="true"><font size="10">II</font></input type="radio">
             <input type="radio" name="numPlayers" value="3" id="radio3"><font size="10">III</font></input type="radio">
@@ -105,7 +93,6 @@
     <h2 align="center">Name</h2>
     <input type="text" id="pName" />
     <br><br><br>
->>>>>>> 701ed10ceaba38ec6dade0785c64bf6fd6a62d85
     <section>
         <div align="center">
             <input type="submit" value="Play" onclick="createGame()" />

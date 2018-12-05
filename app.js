@@ -7,18 +7,6 @@ var fs = require('fs');
 var port = process.argv[2];
 var app = express();
 
-/* --------------------------------- Setting up express server ---------------------------------------- */
-app.use(express.static(__dirname + "/public"));
-
-app.get('/', function(req,res){
-  res.sendFile("splash.html", {root: "./public"});
-})
-
-var server = http.createServer(app);
-
-/* --------------------------------- WebSockets ------------------------------------------------------ */
-const wss = new websocket.Server({clientTracking: false, server});
-
 /* ---------- Setting up variables ---------- */
 var players = {};         //Object with all players/connections
 var games = {};           //Object with all games
@@ -27,6 +15,18 @@ var games = {};           //Object with all games
 var playersConnected = 0; 
 var gamesStarted = 0;     
 var gamesCompleted = 0;    
+
+/* --------------------------------- Setting up express server ---------------------------------------- */
+app.use(express.static(__dirname + "/public"));
+app.set('view engine', 'ejs');
+app.get('/', function(req,res){
+  res.render('splash.ejs', {playersOnline: playersConnected, gamesStarted: gamesStarted, gamesCompleted: gamesCompleted});
+})
+
+var server = http.createServer(app);
+
+/* --------------------------------- WebSockets ------------------------------------------------------ */
+const wss = new websocket.Server({clientTracking: false, server});
 
 wss.on("connection", function(ws) {
     //Keep track of client
@@ -50,8 +50,6 @@ wss.on("connection", function(ws) {
             games[gameID] = {status: "WAITING", nPlayers: data.players, players:[]};
             games[gameID].players[0] = {id: ws.id, name: data.name};
 
-            console.log(games[gameID].nPlayers);
-
             fs.readFile('./public/gamebody.html', "utf8", function(err, html) {
               const stats = {action: "UPDATE_PAGE", nHTML: html, gID: gameID, 
                             players: games[gameID].players, nPlayers: games[gameID].nPlayers};
@@ -61,9 +59,25 @@ wss.on("connection", function(ws) {
             break;
 
           case "JOIN_GAME":
-            if (typeof games[gameID] !== 'undefined' &&
-                games[gameID].status == "WAITING") {
-                playerID[playerID.length] = ws.id;
+            const cGameID = data.gameID;
+            const game = games[cGameID];
+            if (typeof game !== 'undefined' &&
+              game.status == "WAITING") {
+              game.players[game.players.length] = {id: ws.id, name: data.name};
+              
+              for(let i = 0; i < game.players.length - 1; i++){
+                const stats = {action: "UPDATE_PLAYERS", players: game.players, 
+                              nPlayers: game.nPlayers};
+                const json = JSON.stringify(stats);
+                players[game.players[i].id].send(json);
+              }
+
+              fs.readFile('./public/gamebody.html', "utf8", function(err, html) {
+                const stats = {action: "UPDATE_PAGE", nHTML: html, gID: cGameID, 
+                              players: game.players, nPlayers: game.nPlayers};
+                const json = JSON.stringify(stats);
+                ws.send(json);
+              });
             }
             break;
         }

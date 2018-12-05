@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="stylesheets/splash.css" type="text/css" media="screen">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="/scripts/game.js"></script>
+    <title>Snakes and ladders: a 2 to 4 player game</title>
+</head>
+<body>
+    <h1 align="center">Snakes & Ladders</h1>
+    <section>  
+        <h2 align="center">Name</h2>
+        <input type="text" id="pName" />
+    </section>
+    <section>
+
+        <h2 align="center">Number of players</h2>
+        <div class="numPlayers"> 
+            <input type="radio" name="numPlayers" value="2" id="radio2" checked="true"><font size="10">II</font></input type="radio">
+            <input type="radio" name="numPlayers" value="3" id="radio3"><font size="10">III</font></input type="radio">
+            <input type="radio" name="numPlayers" value="4" id="radio4"><font size="10">IV</font></input type="radio">
+        </div>
+    </section>
+    <br><br><br><br><br>
+    <section>
+        <div align="center">
+            <input type="submit" value="Create game" onclick="createGame()" />
+        </div>
+    </section>
+    <section>
+        <h2 align="center">Game ID</h2>
+        <input type="text" id="gameID" />
+        <input type="submit" value="Join game" onclick="joinGame()" />
+    </section>
+    <br>
+    <section>
+        <table align="center" border="1">
+            <tr>
+                <td>
+                    <h3>How to play</h3>
+                    <p>You just have to choose the options here for </p>
+                    <p>starting and then just click on the dice when</p>
+                    <p>it's your turn...</p>
+                </td>
+                <td>
+                    <h3>Statistics</h3>
+                    <p id="connected">Players online: <%= playersOnline %></p>
+                    <p id="started">Number of games started: <%= gamesStarted %></p>
+                    <p id="completed">Number of games completed: <%= gamesCompleted %></p>
+                </td>
+            </tr>
+        </table>
+    </section>
+</body>
+</html>

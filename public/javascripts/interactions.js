@@ -1,11 +1,13 @@
 /* ESLint global variables information */
 /* global Setup, Status, Messages, englishDict*/
 
+let currentPosition = 0;
+
+
 /* basic constructor of game state */
 function GameState(board, sb, socket){
   this.playerType = null;
   this.board = board;
-  this.currentPosition = 0;
   this.statusBar = sb;
 
   var board = function(width, height){
@@ -28,7 +30,7 @@ function GameState(board, sb, socket){
 
 
   this.incPosition = function(){
-    this.currentPosition = this.currentPosition +
+    //currentPosition = currentPosition +
   }
 
 

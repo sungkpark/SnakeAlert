@@ -88,6 +88,11 @@ wss.on("connection", function(ws) {
                     const json = JSON.stringify(stats);
                     ws.send(json);
                 });
+
+                if(game.players.length == game.nPlayers){
+                  game.status == "PLAYING";
+                  console.log("Bitches be playing");
+                }
               }
             break;
         }
@@ -96,12 +101,12 @@ wss.on("connection", function(ws) {
     ws.on('close', function () {
       let gameID = ws.gameID;
       let game = games[gameID];
-      
+
       if(typeof game != 'undefined'){
         console.log("Aborting " + gameID); 
         for(let i = 0; i < game.players.length; i++){
           if(ws.id != game.players[i].id){
-            const request = {action: "ABORT_GAME", player: players[ws.id].name};
+            const request = {action: "ABORT_GAME"};
             const json = JSON.stringify(request);
             players[game.players[i].id].send(json);
           }

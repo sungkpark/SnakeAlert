@@ -28,7 +28,7 @@ socket.onmessage = function(event){
             break;
         
         case "ABORT_GAME":
-            alert(data.player + "left, this game is aborted. Goodbye motherfucker.");
+            alert("Someone left, this game is aborted. Goodbye motherfucker.");
             $(document.body).html("Some fucker aborted the game, refresh the page please.");
             break;
     }

@@ -3,6 +3,7 @@ var express = require("express");
 var http = require("http");
 var websocket = require("ws");
 var fs = require('fs');
+let ejs = require('ejs');
 
 var port = process.argv[2];
 var app = express();
@@ -36,6 +37,8 @@ wss.on("connection", function(ws) {
 
     ws.on("message", function incoming(message) {
         const data = JSON.parse(message);
+        let game;
+        let gameID;
 
         switch(data.action){
           case "GET_STATS":
@@ -46,47 +49,81 @@ wss.on("connection", function(ws) {
             break;
 
           case "CREATE_GAME":
-            const gameID = Math.random().toString(36).substr(2, 9);
-            games[gameID] = {status: "WAITING", nPlayers: data.players, players:[]};
-            games[gameID].players[0] = {id: ws.id, name: data.name};
+            gameID = Math.random().toString(36).substr(2, 9);
 
-            fs.readFile('./public/gamebody.html', "utf8", function(err, html) {
-              const stats = {action: "UPDATE_PAGE", nHTML: html, gID: gameID, 
-                            players: games[gameID].players, nPlayers: games[gameID].nPlayers};
-              const json = JSON.stringify(stats);
-              ws.send(json);
+            game = {status: "WAITING", nPlayers: data.players, players:[]};
+            games[gameID] = game;
+
+            game.players[0] = {id: ws.id, name: data.name};
+            ws.gameID = gameID;
+
+            ejs.renderFile('views/game.ejs', { gameID: gameID, pConnected: game.players.length, 
+              playerInformation: generatePlayerInformation(game.nPlayers, game.players)}, function(err, html) {
+                const stats = {action: "UPDATE_PAGE", nHTML: html, gID: gameID, 
+                players: game.players, nPlayers: game.nPlayers};
+                const json = JSON.stringify(stats);
+                ws.send(json);
             });
             break;
 
           case "JOIN_GAME":
-            const cGameID = data.gameID;
-            const game = games[cGameID];
+            gameID = data.gameID;
+            game = games[gameID];
             if (typeof game !== 'undefined' &&
               game.status == "WAITING") {
-              game.players[game.players.length] = {id: ws.id, name: data.name};
-              
-              for(let i = 0; i < game.players.length - 1; i++){
-                const stats = {action: "UPDATE_PLAYERS", players: game.players, 
-                              nPlayers: game.nPlayers};
-                const json = JSON.stringify(stats);
-                players[game.players[i].id].send(json);
-              }
+                game.players[game.players.length] = {id: ws.id, name: data.name};
+                ws.gameID = gameID;
+                
+                for(let i = 0; i < game.players.length - 1; i++){
+                  const stats = {action: "UPDATE_PLAYERS", players: game.players, 
+                                nPlayers: game.nPlayers};
+                  const json = JSON.stringify(stats);
+                  players[game.players[i].id].send(json);
+                }
 
-              fs.readFile('./public/gamebody.html', "utf8", function(err, html) {
-                const stats = {action: "UPDATE_PAGE", nHTML: html, gID: cGameID, 
-                              players: game.players, nPlayers: game.nPlayers};
-                const json = JSON.stringify(stats);
-                ws.send(json);
-              });
-            }
+                ejs.renderFile('views/game.ejs', { gameID: gameID, pConnected: game.players.length, 
+                  playerInformation: generatePlayerInformation(game.nPlayers, game.players)}, function(err, html) {
+                    const stats = {action: "UPDATE_PAGE", nHTML: html, gID: gameID, 
+                    players: game.players, nPlayers: game.nPlayers};
+                    const json = JSON.stringify(stats);
+                    ws.send(json);
+                });
+              }
             break;
         }
     });
 
     ws.on('close', function () {
+      let gameID = ws.gameID;
+      let game = games[gameID];
+      
+      if(typeof game != 'undefined'){
+        console.log("Aborting " + gameID); 
+        for(let i = 0; i < game.players.length; i++){
+          if(ws.id != game.players[i].id){
+            const request = {action: "ABORT_GAME", player: players[ws.id].name};
+            const json = JSON.stringify(request);
+            players[game.players[i].id].send(json);
+          }
+        }
+        delete games[gameID];
+      }
+      
       delete playersConnected[ws.id];
       playersConnected--;
     })
 });
 
 server.listen(port);
+
+function generatePlayerInformation(nPLayers, players){
+  let html = "";
+  for(let i = 1; i <= nPLayers; i++){
+    if(i <= players.length){
+      html += '<p id="player' + i + '">Player ' + i +': ' + players[i-1].name + '</p>';
+    }else{
+      html += '<p id="player' + i + '">...</p>';
+    }
+  }
+  return html;
+}

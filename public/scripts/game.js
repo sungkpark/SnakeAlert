@@ -14,6 +14,7 @@ socket.onmessage = function(event){
             $('head').append('<link rel="stylesheet" type="text/css" href="stylesheets/game.css">');
             $(document.body).html(data.nHTML);
             $("#gameID").html("Game ID: " + data.gID);
+
         case "UPDATE_PLAYERS":
             $("#playerConnected").html("Players connected: " + data.players.length + "/" + data.nPlayers);
             for(var i = 0; i < data.nPlayers; i++){
@@ -24,6 +25,11 @@ socket.onmessage = function(event){
                     $(playerString).html("Player" + (i + 1) + ": " +"...");
                 }
             }
+            break;
+        
+        case "ABORT_GAME":
+            alert(data.player + "left, this game is aborted. Goodbye motherfucker.");
+            $(document.body).html("Some fucker aborted the game, refresh the page please.");
             break;
     }
 }

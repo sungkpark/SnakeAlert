@@ -8,9 +8,9 @@ var cumDiceRolled = 0;
 
 function changeImg(){
   var diceRolled = rollDice();
-  // cumDiceRolled += diceRolled;
-  // console.log('You rolled a ' + diceRolled);
-  // console.log('cumDiceRolled: ' + cumDiceRolled);
+  cumDiceRolled += diceRolled;
+  console.log('You rolled a ' + diceRolled);
+  console.log('cumDiceRolled: ' + cumDiceRolled);
   if(diceRolled===1){
     $("#dice").html('<img src="images/dice1.png" onclick="changeImg()" alt="diceImage" width="100" height="100">');
     move(1);
@@ -35,5 +35,5 @@ function changeImg(){
     $("#dice").html('<img src="images/dice6.png" onclick="changeImg()" alt="diceImage" width="100" height="100">');
     move(6);
   }
-  // console.log('current position: ' + currentPosition);
+  console.log('current position: ' + currentPosition);
 }

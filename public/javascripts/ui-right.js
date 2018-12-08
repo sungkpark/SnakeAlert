@@ -21,6 +21,8 @@ function move(numRolled){
       }
     }
     if(currentPosition===49){
+      cumDiceRolled=0;
+      currentPosition=0;
       alert("Congrats, you won!");
     }
 }

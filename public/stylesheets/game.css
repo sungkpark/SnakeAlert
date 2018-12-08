@@ -4,7 +4,7 @@ html *
    font-family: Arial !important;
 }
 .GG {
-    position: fixed;
+    position: absolute;
     right: 20em;
     bottom: 4em;
     padding:.3em;

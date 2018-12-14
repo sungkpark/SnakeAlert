@@ -1,25 +1,10 @@
 html *
 {
-   font-size: 1em !important;
    color: #000 !important;
    font-family: Arial !important;
 }
-
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    height: 70px;
-    width: 600px;
-    background-color: powderblue;
-}
-
-th {
-    text-align: left;
-    vertical-align: top;
-}
-
 .GG {
-    position: fixed;
+    position: absolute;
     right: 20em;
     bottom: 4em;
     padding:.3em;
@@ -37,9 +22,15 @@ th {
     bottom: 5em;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: 100px 100px 100px;
-    grid-template-rows: 100px 100px 100px;
-    grid-gap: 10px;
+table {
+	margin: 0 auto;
+  background: orange;
+  text-align: right;
+  vertical-align: top;
+}
+td {
+    width: 60px; height: 60px;
+}
+tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
+	background: white;
 }

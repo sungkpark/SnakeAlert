@@ -33,6 +33,16 @@ td {
     width: 60px; height: 60px;
     vertical-align: bottom;
 }
+tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
+	/* background: white; */
+}
+
+#dice {
+  position: absolute;
+  right: 20em;
+  bottom: 30em;
+  padding:.3em;
+}
 /*tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
 	color:#FFA500;
 }*/

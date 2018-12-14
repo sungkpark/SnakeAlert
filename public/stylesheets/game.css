@@ -1,6 +1,7 @@
 html *
 {
-   color: #000 !important;
+   color: #000;
+   text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
    font-family: Arial !important;
 }
 .GG {
@@ -26,6 +27,7 @@ table {
 	margin: 0 auto;
   /*background: orange;*/
   text-align: right;
+  color:red;
   background-image: url("../images/board.png");
   background-size: contain;
 }

@@ -1,3 +1,6 @@
+//Game state
+let players = {};
+
 var status = "SPLASH";
 
 var socket = new WebSocket("ws://localhost:3000");
@@ -27,6 +30,13 @@ socket.onmessage = function(event){
             }
             break;
         
+        case "START_GAME":
+            for(let i = 0; i < data.nPLayers; i++){
+                players[i] = {location: 1};
+            }
+            updateBoard();
+            break;
+
         case "ABORT_GAME":
             alert("Someone left, this game is aborted. Goodbye motherfucker.");
             $(document.body).html("Some fucker aborted the game, refresh the page please.");
@@ -62,6 +72,13 @@ function joinGame(){
     const request = {action: "JOIN_GAME", name: pName, gameID: $("#gameID").val()};
     const json = JSON.stringify(request);
     socket.send(json);
+}
+
+function updateBoard(){
+    for(let i = 0; i < players.length; i++){
+        let jq = "#" + players[i].location;
+        $(jq).html("Player" + i + "here lmao");
+    }
 }
 
 // Get live statistics updates every second while in splash

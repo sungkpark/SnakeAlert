@@ -2,7 +2,6 @@
 var express = require("express");
 var http = require("http");
 var websocket = require("ws");
-var fs = require('fs');
 let ejs = require('ejs');
 
 var port = process.argv[2];
@@ -91,7 +90,7 @@ wss.on("connection", function(ws) {
 
                 if(game.players.length == game.nPlayers){
                   game.status == "PLAYING";
-                  console.log("Bitches be playing");
+                  sendEachPlayer(game, {action: "START_GAME", nPlayers: game.nPlayers});
                 }
               }
             break;
@@ -121,9 +120,9 @@ wss.on("connection", function(ws) {
 
 server.listen(port);
 
-function generatePlayerInformation(nPLayers, players){
+function generatePlayerInformation(nPlayers, players){
   let html = "";
-  for(let i = 1; i <= nPLayers; i++){
+  for(let i = 1; i <= nPlayers; i++){
     if(i <= players.length){
       html += '<p id="player' + i + '">Player ' + i +': ' + players[i-1].name + '</p>';
     }else{
@@ -131,4 +130,11 @@ function generatePlayerInformation(nPLayers, players){
     }
   }
   return html;
+}
+
+function sendEachPlayer(game, data){
+  for(let i = 0; i < game.players.length - 1; i++){
+    const json = JSON.stringify(data);
+    players[game.players[i].id].send(json);
+  }
 }

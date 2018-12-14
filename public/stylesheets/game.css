@@ -34,6 +34,7 @@ table {
 td {  
     vertical-align: top;
     width: 60px; height: 60px;
+    vertical-align: top;
 }
 tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
 	/*background: white;*/

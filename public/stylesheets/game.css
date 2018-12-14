@@ -24,13 +24,15 @@ html *
 
 table {
 	margin: 0 auto;
-  background: orange;
+  /*background: orange;*/
   text-align: right;
-  vertical-align: top;
+  background-image: url("../images/board.png");
+  background-size: contain;
 }
-td {
+td {  
+    vertical-align: top;
     width: 60px; height: 60px;
 }
 tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
-	background: white;
+	/*background: white;*/
 }

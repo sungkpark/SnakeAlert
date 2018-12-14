@@ -29,7 +29,7 @@ table {
   background-image: url("../images/board.png");
   background-size: contain;
 }
-td {  
+td {
     width: 60px; height: 60px;
     vertical-align: bottom;
 }
@@ -40,7 +40,8 @@ tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
 #dice {
   position: absolute;
   right: 20em;
-  bottom: 30em;
+  /* bottom: 20em; */
+  bottom: 0;
   padding:.3em;
 }
 /*tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {

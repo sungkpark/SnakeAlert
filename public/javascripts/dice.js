@@ -5,10 +5,13 @@ function rollDice(){
 }
 
 var cumDiceRolled = 0;
+var numOfDiceRolled = 0;
 
 function changeImg(){
   var diceRolled = rollDice();
   cumDiceRolled += diceRolled;
+  numOfDiceRolled++;
+  console.log('number of dice rolled: ' + numOfDiceRolled);
   console.log('You rolled a ' + diceRolled);
   console.log('cumDiceRolled: ' + cumDiceRolled);
   if(diceRolled===1){
@@ -36,4 +39,5 @@ function changeImg(){
     move(6);
   }
   console.log('current position: ' + currentPosition);
+  checkForTrap();
 }

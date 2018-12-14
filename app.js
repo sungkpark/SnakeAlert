@@ -12,15 +12,19 @@ var players = {};         //Object with all players/connections
 var games = {};           //Object with all games
 
 //Stats variables
-var playersConnected = 0; 
-var gamesStarted = 0;     
-var gamesCompleted = 0;    
+var playersConnected = 0;
+var gamesStarted = 0;
+var gamesCompleted = 0;
 
 /* --------------------------------- Setting up express server ---------------------------------------- */
 app.use(express.static(__dirname + "/public"));
 app.set('view engine', 'ejs');
 app.get('/', function(req,res){
-  res.render('splash.ejs', {playersOnline: playersConnected, gamesStarted: gamesStarted, gamesCompleted: gamesCompleted});
+  res.render('splash.ejs', {
+    playersOnline: playersConnected,
+    gamesStarted: gamesStarted,
+    gamesCompleted: gamesCompleted
+  });
 })
 
 var server = http.createServer(app);
@@ -41,8 +45,12 @@ wss.on("connection", function(ws) {
 
         switch(data.action){
           case "GET_STATS":
-            const stats = {action: "UPDATE_STATS", pConnected: playersConnected, 
-                            gStarted: gamesStarted, gCompleted: gamesCompleted};
+            const stats = {
+              action: "UPDATE_STATS",
+              pConnected: playersConnected,
+              gStarted: gamesStarted,
+              gCompleted: gamesCompleted
+            };
             const json = JSON.stringify(stats);
             ws.send(json);
             break;
@@ -50,16 +58,34 @@ wss.on("connection", function(ws) {
           case "CREATE_GAME":
             gameID = Math.random().toString(36).substr(2, 9);
 
-            game = {status: "WAITING", nPlayers: data.players, players:[], turn: 0};
+            game = {
+              status: "WAITING",
+              nPlayers: data.players,
+              players:[],
+              turn: 0
+            };
             games[gameID] = game;
 
-            game.players[0] = {id: ws.id, name: data.name};
+            game.players[0] = {
+              id: ws.id,
+              name: data.name
+            };
             ws.gameID = gameID;
 
-            ejs.renderFile('views/game.ejs', { gameID: gameID, pConnected: game.players.length, 
-              playerInformation: generatePlayerInformation(game.nPlayers, game.players)}, function(err, html) {
-                const stats = {action: "UPDATE_PAGE", nHTML: html, gID: gameID, 
-                players: game.players, nPlayers: game.nPlayers};
+            ejs.renderFile(
+              'views/game.ejs',
+              {
+                gameID: gameID,
+                pConnected: game.players.length,
+                playerInformation: generatePlayerInformation(game.nPlayers, game.players)
+              },
+              function(err, html) {
+                const stats = {
+                  action: "UPDATE_PAGE",
+                  nHTML: html, gID: gameID,
+                  players: game.players,
+                  nPlayers: game.nPlayers
+                };
                 const json = JSON.stringify(stats);
                 ws.send(json);
             });
@@ -70,20 +96,37 @@ wss.on("connection", function(ws) {
             game = games[gameID];
             if (typeof game !== 'undefined' &&
               game.status == "WAITING") {
-                game.players[game.players.length] = {id: ws.id, name: data.name};
+                game.players[game.players.length] = {
+                  id: ws.id,
+                  name: data.name
+                };
                 ws.gameID = gameID;
-                
+
                 for(let i = 0; i < game.players.length - 1; i++){
-                  const stats = {action: "UPDATE_PLAYERS", players: game.players, 
-                                nPlayers: game.nPlayers};
+                  const stats = {
+                    action: "UPDATE_PLAYERS",
+                    players: game.players,
+                    nPlayers: game.nPlayers
+                  };
                   const json = JSON.stringify(stats);
                   players[game.players[i].id].send(json);
                 }
 
-                ejs.renderFile('views/game.ejs', { gameID: gameID, pConnected: game.players.length, 
-                  playerInformation: generatePlayerInformation(game.nPlayers, game.players)}, function(err, html) {
-                    const stats = {action: "UPDATE_PAGE", nHTML: html, gID: gameID, 
-                    players: game.players, nPlayers: game.nPlayers};
+                ejs.renderFile(
+                  'views/game.ejs',
+                  {
+                    gameID: gameID,
+                    pConnected: game.players.length,
+                    playerInformation: generatePlayerInformation(game.nPlayers, game.players)
+                  },
+                    function(err, html) {
+                      const stats = {
+                        action: "UPDATE_PAGE",
+                        nHTML: html,
+                        gID: gameID,
+                        players: game.players,
+                        nPlayers: game.nPlayers
+                      };
                     const json = JSON.stringify(stats);
                     ws.send(json);
                 });
@@ -94,7 +137,7 @@ wss.on("connection", function(ws) {
                 }
               }
             break;
-          
+
           case "DICEROLL":
               gameID = ws.gameID;
               game = games[gameID];
@@ -111,7 +154,7 @@ wss.on("connection", function(ws) {
       let game = games[gameID];
 
       if(typeof game != 'undefined'){
-        console.log("Aborting " + gameID); 
+        console.log("Aborting " + gameID);
         for(let i = 0; i < game.players.length; i++){
           if(ws.id != game.players[i].id){
             const request = {action: "ABORT_GAME"};
@@ -121,7 +164,7 @@ wss.on("connection", function(ws) {
         }
         delete games[gameID];
       }
-      
+
       delete playersConnected[ws.id];
       playersConnected--;
     })

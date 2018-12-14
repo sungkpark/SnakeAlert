@@ -1,29 +1,19 @@
-const ladderMap = {
-  // tail: head;
-  42: 44,
-  24: 39,
-  13: 28,
-  4: 18
-}
+const ladderCoordinate = [
+  [4, 18],
+  [13, 28],
+  [24, 39],
+  [42, 44]
+];
 
-const snakesMap = {
-  // head: tail;
-  48: 34,
-  45: 29,
-  40: 25,
-  35: 10,
-  26: 12,
-  15: 1
-}
+const ladderStart = [4, 13, 24, 42];
 
+const snakeCoordinate = [
+  [15, 1],
+  [26, 12],
+  [35, 10],
+  [40, 25],
+  [45, 29],
+  [48, 34]
+];
 
-
-
-// function makeBoard(){
-//   var space = 1;
-//   for (var r=0; r<8; r++) {
-//     var col = "";
-//     for (var c=0; c<8; c++) { col += "<td data-pos='"+space+"'></td>"; space++; }
-//     $("#board").append("<tr>"+col+"</tr>");
-//   }
-// };
+const snakeHead = [15, 26, 35, 40, 45, 48];

@@ -71,6 +71,13 @@
             socket.send(json);
         }
 
+        function rollDice(){
+            const message = {action: "DICEROLL"};
+            const json = JSON.stringify(message);
+            changeImg();
+            socket.send(json);
+        }
+
         // Create a random name
         $(document).ready(function(){
             const rNumber = Math.floor((Math.random() * 10000) + 1);

@@ -50,7 +50,7 @@ wss.on("connection", function(ws) {
           case "CREATE_GAME":
             gameID = Math.random().toString(36).substr(2, 9);
 
-            game = {status: "WAITING", nPlayers: data.players, players:[]};
+            game = {status: "WAITING", nPlayers: data.players, players:[], turn: 0};
             games[gameID] = game;
 
             game.players[0] = {id: ws.id, name: data.name};
@@ -94,6 +94,15 @@ wss.on("connection", function(ws) {
                 }
               }
             break;
+          
+          case "DICEROLL":
+              gameID = ws.gameID;
+              game = games[gameID];
+
+              if(game.players[game.turn].id == ws.id){  //is it the players turn
+                console.log("real shit");
+              }
+              break;
         }
     });
 

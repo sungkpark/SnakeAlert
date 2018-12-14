@@ -1,7 +1,6 @@
 html *
 {
-   color: #000;
-   text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+   color: black;
    font-family: Arial !important;
 }
 .GG {
@@ -26,16 +25,14 @@ html *
 table {
 	margin: 0 auto;
   /*background: orange;*/
-  text-align: right;
-  color:red;
+  text-align: center;
   background-image: url("../images/board.png");
   background-size: contain;
 }
 td {  
-    vertical-align: top;
     width: 60px; height: 60px;
-    vertical-align: top;
+    vertical-align: bottom;
 }
-tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
-	/*background: white;*/
-}
+/*tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
+	color:#FFA500;
+}*/

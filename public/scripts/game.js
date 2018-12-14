@@ -81,6 +81,13 @@ function updateBoard(){
     }
 }
 
+function roll(){
+    const message = {action: "DICEROLL"};
+    const json = JSON.stringify(message);
+    changeImg();
+    socket.send(json);
+}
+
 // Get live statistics updates every second while in splash
 setInterval(function() {
     if(status=="SPLASH"){    

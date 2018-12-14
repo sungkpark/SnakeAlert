@@ -9,6 +9,7 @@ function moveOneGridAfter49(){
 
 function move(numRolled){
     var before49 = true;
+    
     for(var i=0; i<numRolled; i++){
       if(before49){
         moveOneGridBelow49();

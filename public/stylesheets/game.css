@@ -31,11 +31,18 @@ table {
   background-image: url("../images/board.png");
   background-size: contain;
 }
-td {  
+td {
     vertical-align: top;
     width: 60px; height: 60px;
     vertical-align: top;
 }
 tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
-	/*background: white;*/
+	/* background: white; */
+}
+
+#dice {
+  position: absolute;
+  right: 20em;
+  bottom: 30em;
+  padding:.3em;
 }

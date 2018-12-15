@@ -4,7 +4,7 @@ html *
    color: #000 !important;
    font-family: Arial !important;
    text-align: center;
-   
+
 }
 
 .humanOrBot {
@@ -15,4 +15,8 @@ html *
     margin-left: auto;
     margin-right: auto;
     display: block;
+}
+
+body {
+  background-image: url("../images/adventure.gif");
 }

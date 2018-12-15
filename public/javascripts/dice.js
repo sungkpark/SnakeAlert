@@ -17,5 +17,4 @@ function changeImg(pNum, diceRolled){
   move(pNum, diceRolled);
 
   console.log('current position: ' + currentPosition[pNum]);
-  checkForTrap(pNum);
 }

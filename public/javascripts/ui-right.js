@@ -1,9 +1,14 @@
 
-function moveOneGridBelow49(pNum){
-  currentPosition[pNum]++;
+function moveOneGridBelow49(pNum, step, last){
   setTimeout(function() {
+    currentPosition[pNum]++;
     movePlayer(pNum);
-  }, 100);
+
+    if(last){
+      checkForTrap(pNum);
+    }
+  }, step*100);
+  console.log(step*100);
 }
 
 function moveOneGridAfter49(pNum){
@@ -13,12 +18,16 @@ function moveOneGridAfter49(pNum){
 
 function move(pNum, numRolled){
     var before49 = true;
+    var last = false;
     for(var i=0; i<numRolled; i++){
+      if(i+1==numRolled){
+        last = true;
+      }
       if(before49){
-        moveOneGridBelow49(pNum);
+        moveOneGridBelow49(pNum, i, last);
       }
       else{
-        moveOneGridAfter49(pNum);
+        moveOneGridAfter49(pNum, i);
       }
       if(currentPosition[pNum]===49){
         before49=false;

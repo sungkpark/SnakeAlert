@@ -41,3 +41,11 @@ td {
   bottom: 0;
   padding:.3em;
 }
+
+.start {
+  border-style: dotted;
+}
+
+.gameBoard {
+  vertical-align: bottom;
+}

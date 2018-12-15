@@ -35,7 +35,7 @@ function move(pNum, numRolled){
 function movePlayer(pNum){
   $('#player'+pNum).remove();
   $('#'+currentPosition[pNum]).append('<img id="player'+ pNum
-   + '" src="images/playerRed.png" alt="player '+ pNum + '" height="30" width="20">');
+   + '" src="images/player'+pNum+'.png" alt="player '+ pNum + '" height="30" width="20">');
 }
 
 function checkForTrap(pNum){
@@ -59,7 +59,7 @@ function goDownSnake(pNum, a){
 }
 
 function goUpLadder(pNum, a){
-  for(let i=0; i<6; i++){
+  for(let i=0; i<4; i++){
     if(ladderCoordinate[i][0]===a){
         currentPosition[pNum] = ladderCoordinate[i][1];
         break;

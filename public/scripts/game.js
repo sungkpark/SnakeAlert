@@ -18,7 +18,7 @@ socket.onmessage = function(event){
         case "UPDATE_PLAYERS":
             $("#playerConnected").html("Players connected: " + data.players.length + "/" + data.nPlayers);
             for(var i = 0; i < data.nPlayers; i++){
-                var playerString = "#player" + (i + 1);
+                var playerString = "#player" + (i + 1) + "name";
                 if(typeof data.players[i] !== 'undefined') {
                     $(playerString).html("Player" + (i + 1) + ": " + data.players[i].name);
                 }else{

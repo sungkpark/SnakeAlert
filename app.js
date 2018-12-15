@@ -132,18 +132,22 @@ wss.on("connection", function(ws) {
                 });
 
                 if(game.players.length == game.nPlayers){
-                  game.status == "PLAYING";
+                  game.status = "PLAYING";
                   sendEachPlayer(game, {action: "START_GAME", nPlayers: game.nPlayers});
                 }
               }
-            break;
+              break;
 
-          case "DICEROLL":
+            case "DICEROLL":
               gameID = ws.gameID;
               game = games[gameID];
-
-              if(game.players[game.turn].id == ws.id){  //is it the players turn
-                console.log("real shit");
+              if(game.players[game.turn].id == ws.id && game.status == "PLAYING"){
+                let numRoll = Math.floor(Math.random() * 6) + 1;
+                sendEachPlayer(game, {action: "DICEROLL", numRoll: numRoll, player: game.turn});
+                console.log(numRoll);
+                if(++game.turn == game.nPlayers){
+                  game.turn = 0;
+                }
               }
               break;
         }
@@ -185,7 +189,7 @@ function generatePlayerInformation(nPlayers, players){
 }
 
 function sendEachPlayer(game, data){
-  for(let i = 0; i < game.players.length - 1; i++){
+  for(let i = 0; i < game.players.length; i++){
     const json = JSON.stringify(data);
     players[game.players[i].id].send(json);
   }

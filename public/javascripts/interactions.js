@@ -1,7 +1,7 @@
 /* ESLint global variables information */
 /* global Setup, Status, Messages, englishDict*/
 
-let currentPosition = 0;
+let currentPosition = [];
 
 
 /* basic constructor of game state */

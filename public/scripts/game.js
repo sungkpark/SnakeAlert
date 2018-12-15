@@ -1,6 +1,3 @@
-//Game state
-let players = {};
-
 var status = "SPLASH";
 
 var socket = new WebSocket("ws://localhost:3000");
@@ -31,15 +28,21 @@ socket.onmessage = function(event){
             break;
         
         case "START_GAME":
-            for(let i = 0; i < data.nPLayers; i++){
-                players[i] = {location: 1};
+            for(let i = 0; i < data.nPlayers; i++){
+                currentPosition[i] = 1;
+                movePlayer(i);
             }
-            updateBoard();
             break;
 
         case "ABORT_GAME":
             alert("Someone left, this game is aborted. Goodbye motherfucker.");
             $(document.body).html("Some fucker aborted the game, refresh the page please.");
+            break;
+
+        case "DICEROLL":
+            changeImg(data.player, data.numRoll);
+            console.log(data.numRoll);
+            console.log(data.player);
             break;
     }
 }
@@ -54,7 +57,6 @@ function getStats(){
 }
 
 function createGame(){
-    console.log("here");
     var nPlayers = 2;
     if($("#radio3").prop('checked')){
         nPlayers = 3;
@@ -74,17 +76,10 @@ function joinGame(){
     socket.send(json);
 }
 
-function updateBoard(){
-    for(let i = 0; i < players.length; i++){
-        let jq = "#" + players[i].location;
-        $(jq).html("Player" + i + "here lmao");
-    }
-}
-
 function roll(){
+    console.log("JEP");
     const message = {action: "DICEROLL"};
     const json = JSON.stringify(message);
-    changeImg();
     socket.send(json);
 }
 

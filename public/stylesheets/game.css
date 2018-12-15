@@ -1,8 +1,8 @@
-html *
-{
+html * {
    color: black;
    font-family: Arial !important;
 }
+
 .GG {
     position: absolute;
     right: 20em;
@@ -23,27 +23,21 @@ html *
 }
 
 table {
-	margin: 0 auto;
-  /*background: orange;*/
-  text-align: center;
-  background-image: url("../images/board.png");
-  background-size: contain;
+    margin: 0 auto;
+    text-align: center;
+    background-image: url("../images/board.png");
+    background-size: contain;
+    background-repeat: no-repeat;
 }
+
 td {
     width: 60px; height: 60px;
     vertical-align: bottom;
-}
-tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
-	/* background: white; */
 }
 
 #dice {
   position: absolute;
   right: 20em;
-  /* bottom: 20em; */
   bottom: 0;
   padding:.3em;
 }
-/*tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
-	color:#FFA500;
-}*/

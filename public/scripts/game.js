@@ -1,6 +1,6 @@
 var status = "SPLASH";
 
-var socket = new WebSocket("ws://localhost:3000");
+var socket = new WebSocket("ws://" + window.location.hostname + ":3000");
 socket.onmessage = function(event){
     const data = JSON.parse(event.data);
     switch(data.action){

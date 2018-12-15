@@ -26,10 +26,10 @@ socket.onmessage = function(event){
                 }
             }
             break;
-        
+
         case "START_GAME":
             for(let i = 0; i < data.nPlayers; i++){
-                currentPosition[i] = 1;
+                currentPosition[i] = 0;
                 movePlayer(i);
             }
             break;
@@ -85,14 +85,14 @@ function roll(){
 
 // Get live statistics updates every second while in splash
 setInterval(function() {
-    if(status=="SPLASH"){    
+    if(status=="SPLASH"){
         getStats();
     }else{
         clearInterval();
     }
 }, 1000);
 
-// Create a random name 
+// Create a random name
 $(document).ready(function(){
     const rNumber = Math.floor((Math.random() * 10000) + 1);
     $("#pName").attr("value", "Guest" + rNumber);

@@ -1,15 +1,19 @@
 /* --------------------------------- Importing modules ------------------------------------------------ */
 var express = require("express");
+var cookieParser = require('cookie-parser');
 var http = require("http");
 var websocket = require("ws");
 let ejs = require('ejs');
 
 var port = process.argv[2];
 var app = express();
+app.use(cookieParser());
 
 /* ---------- Setting up variables ---------- */
 var players = {};         //Object with all players/connections
 var games = {};           //Object with all games
+
+var board = {4: 18, 13: 28, 15: 1, 24: 39, 26: 12, 35: 10, 40: 25, 45: 29, 42: 44, 48: 34};
 
 //Stats variables
 var playersConnected = 0;
@@ -19,7 +23,12 @@ var gamesCompleted = 0;
 /* --------------------------------- Setting up express server ---------------------------------------- */
 app.use(express.static(__dirname + "/public"));
 app.set('view engine', 'ejs');
-app.get('/', function(req,res){
+app.get('/*', function(req,res){
+  let timesVisited = 1;
+  if(req.cookies.visited !== undefined){
+    timesVisited = parseInt(req.cookies.visited) + 1;
+  }
+  res.cookie('visited', timesVisited, { maxAge: 365*24*60*60*1000, httpOnly: false });
   res.render('splash.ejs', {
     playersOnline: playersConnected,
     gamesStarted: gamesStarted,
@@ -68,7 +77,8 @@ wss.on("connection", function(ws) {
 
             game.players[0] = {
               id: ws.id,
-              name: data.name
+              name: data.name,
+              position: 0
             };
             ws.gameID = gameID;
 
@@ -98,7 +108,8 @@ wss.on("connection", function(ws) {
               game.status == "WAITING") {
                 game.players[game.players.length] = {
                   id: ws.id,
-                  name: data.name
+                  name: data.name,
+                  position: 0
                 };
                 ws.gameID = gameID;
 
@@ -134,6 +145,7 @@ wss.on("connection", function(ws) {
                 if(game.players.length == game.nPlayers){
                   game.status = "PLAYING";
                   sendEachPlayer(game, {action: "START_GAME", nPlayers: game.nPlayers});
+                  gamesStarted++;
                 }
               }
               break;
@@ -141,13 +153,27 @@ wss.on("connection", function(ws) {
             case "DICEROLL":
               gameID = ws.gameID;
               game = games[gameID];
-              if(game.players[game.turn].id == ws.id && game.status == "PLAYING"){
-                let numRoll = Math.floor(Math.random() * 6) + 1;
+              player = game.players[game.turn];
+              if(player.id == ws.id && game.status == "PLAYING"){
+                //roll the dice
+                let numRoll = 6;/*Math.floor(Math.random() * 6) + 1;*/
                 sendEachPlayer(game, {action: "DICEROLL", numRoll: numRoll, player: game.turn});
-                console.log(numRoll);
+                //update player position
+                player.position += numRoll;
+                if(typeof board[player.position] !== 'undefined'){                                //check for ladders/snakes
+                  player.position = board[player.position];
+                }else if(player.position === 49){                                                 //game won
+                  gamesCompleted++;
+                  let ms = numRoll*100+1000;                                                      //1 second + animation
+                  setTimeout(function(){                                                          //insures animation plays out first
+                    sendEachPlayer(game, {action: "WON_GAME", winnerName: player.name});
+                  }, ms);
+                  delete games[gameID];
+                }
+                //update game turn
                 if(++game.turn == game.nPlayers){
                   game.turn = 0;
-                }
+                }  
               }
               break;
         }
@@ -180,9 +206,9 @@ function generatePlayerInformation(nPlayers, players){
   let html = "";
   for(let i = 1; i <= nPlayers; i++){
     if(i <= players.length){
-      html += '<p id="player' + i + '">Player ' + i +': ' + players[i-1].name + '</p>';
+      html += '<p id="player' + i + 'name">Player ' + i +': ' + players[i-1].name + '</p>';
     }else{
-      html += '<p id="player' + i + '">...</p>';
+      html += '<p id="player' + i + 'name">...</p>';
     }
   }
   return html;

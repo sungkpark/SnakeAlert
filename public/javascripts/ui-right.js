@@ -1,3 +1,4 @@
+let currentPosition = [];
 
 function moveOneGridBelow49(pNum, step, last){
   setTimeout(function() {
@@ -8,12 +9,17 @@ function moveOneGridBelow49(pNum, step, last){
       checkForTrap(pNum);
     }
   }, step*100);
-  console.log(step*100);
 }
 
-function moveOneGridAfter49(pNum){
-  currentPosition[pNum]--;
-  movePlayer(pNum);
+function moveOneGridAfter49(pNum, step, last){
+  setTimeout(function() {
+    currentPosition[pNum]--;
+    movePlayer(pNum);
+
+    if(last){
+      checkForTrap(pNum);
+    }
+  }, step*100);
 }
 
 function move(pNum, numRolled){
@@ -24,20 +30,14 @@ function move(pNum, numRolled){
         last = true;
       }
       if(before49){
-        moveOneGridBelow49(pNum, i, last);
+        moveOneGridBelow49(pNum, i+1, last);
       }
       else{
-        moveOneGridAfter49(pNum, i);
+        moveOneGridAfter49(pNum, i+1, last);
       }
-      if(currentPosition[pNum]===49){
+      if((currentPosition[pNum]+i+1)===49){
         before49=false;
       }
-    }
-    if(currentPosition[pNum]===49){
-      cumDiceRolled[pNum]=0;
-      currentPosition[pNum]=0;
-      numOfDiceRolled[pNum]=0;
-      alert("Congrats, somebody won!");
     }
 }
 

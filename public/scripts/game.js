@@ -35,14 +35,17 @@ socket.onmessage = function(event){
             break;
 
         case "ABORT_GAME":
-            alert("Someone left, this game is aborted. Goodbye motherfucker.");
-            $(document.body).html("Some fucker aborted the game, refresh the page please.");
+            alert("Someone left, this game is aborted.");
+            $(document.body).html("Someone left, this game is aborted. Please refresh the page.");
+            break;
+
+        case "WON_GAME":
+            alert(data.winnerName + " won the game!")
+            $(document.body).html(data.winnerName + " won the game. Please refresh the page.");
             break;
 
         case "DICEROLL":
             changeImg(data.player, data.numRoll);
-            console.log(data.numRoll);
-            console.log(data.player);
             break;
     }
 }
@@ -97,3 +100,25 @@ $(document).ready(function(){
     const rNumber = Math.floor((Math.random() * 10000) + 1);
     $("#pName").attr("value", "Guest" + rNumber);
 });
+
+// Set visited
+$(document).ready(function(){
+    $("#visited").text("You have visited this page " + getCookie("visited") + " times.");
+});
+
+//from https://www.w3schools.com/js/js_cookies.asp
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }

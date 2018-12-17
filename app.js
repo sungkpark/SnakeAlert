@@ -156,7 +156,7 @@ wss.on("connection", function(ws) {
               player = game.players[game.turn];
               if(player.id == ws.id && game.status == "PLAYING"){
                 //roll the dice
-                let numRoll = 6;/*Math.floor(Math.random() * 6) + 1;*/
+                let numRoll = Math.floor(Math.random() * 6) + 1;
                 sendEachPlayer(game, {action: "DICEROLL", numRoll: numRoll, player: game.turn});
                 //update player position
                 player.position += numRoll;

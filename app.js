@@ -152,31 +152,33 @@ wss.on("connection", function(ws) {
 
             case "DICEROLL":
               gameID = ws.gameID;
-              game = games[gameID];
-              player = game.players[game.turn];
-              if(player.id == ws.id && game.status == "PLAYING"){
-                //roll the dice
-                let numRoll = Math.floor(Math.random() * 6) + 1;
-                sendEachPlayer(game, {action: "DICEROLL", numRoll: numRoll, player: game.turn, players: game.players, nPlayers: game.nPlayers});
-                //update player position
-                player.position += numRoll;
-                if(typeof board[player.position] !== 'undefined'){                                //check for ladders/snakes
-                  player.position = board[player.position];
-                }else if(player.position == 49){
-                  console.log("GAME END");                                                 //game won
-                  gamesCompleted++;
-                  let ms = 1000;                                                      //1 second + animation
-                  setTimeout(function(){                                                          //insures animation plays out first
-                    sendEachPlayer(game, {action: "WON_GAME", winnerName: player.name});         
-                    delete games[gameID];
-                  }, ms);
+              if(typeof games[gameID] !== 'undefined'){
+                game = games[gameID];
+                player = game.players[game.turn];
+                if(player.id == ws.id && game.status == "PLAYING"){
+                  //roll the dice
+                  let numRoll = Math.floor(Math.random() * 6) + 1;
+                  sendEachPlayer(game, {action: "DICEROLL", numRoll: numRoll, player: game.turn, players: game.players, nPlayers: game.nPlayers});
+                  //update player position
+                  player.position += numRoll;
+                  if(typeof board[player.position] !== 'undefined'){                                //check for ladders/snakes
+                    player.position = board[player.position];
+                  }else if(player.position == 49){
+                    console.log("GAME END");                                                 //game won
+                    gamesCompleted++;
+                    let ms = 1000;                                                      //1 second + animation
+                    setTimeout(function(){                                                          //insures animation plays out first
+                      sendEachPlayer(game, {action: "WON_GAME", winnerName: player.name});         
+                      delete games[gameID];
+                    }, ms);
+                  }
+                  //update game turn
+                  if(++game.turn == game.nPlayers){
+                    game.turn = 0;
+                  }
+                  console.log(player.position);
                 }
-                //update game turn
-                if(++game.turn == game.nPlayers){
-                  game.turn = 0;
                 }
-                console.log(player.position);
-              }
               break;
         }
     });

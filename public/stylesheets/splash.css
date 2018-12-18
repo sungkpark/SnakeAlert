@@ -33,11 +33,11 @@ body {
   background-color: red;
   width: 140px;
   height: 40px;
+  font-size: 100;
 }
 
 #gameButton {
-  transition: width 5s;
-  transition: height 4s;
+  transition: width 20s, height 4s, font-size 4s;
   animation-name: example;
   animation-duration: 4s;
   animation-iteration-count: 10;

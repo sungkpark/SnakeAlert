@@ -166,11 +166,11 @@ wss.on("connection", function(ws) {
                   }else if(player.position == 49){
                     console.log("GAME END");                                                 //game won
                     gamesCompleted++;
-                    let ms = 1000;                                                      //1 second + animation
-                    setTimeout(function(){                                                          //insures animation plays out first
+                    //let ms = 1000;                                                      //1 second + animation
+                    /*setTimeout(function(){*/                                                          //insures animation plays out first
                       sendEachPlayer(game, {action: "WON_GAME", winnerName: player.name});         
                       delete games[gameID];
-                    }, ms);
+                    /*}, ms);*/
                   }
                   //update game turn
                   if(++game.turn == game.nPlayers){

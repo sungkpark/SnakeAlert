@@ -208,9 +208,9 @@ function generatePlayerInformation(nPlayers, players, me){
   for(let i = 1; i <= nPlayers; i++){
     if(i <= players.length){
       if(i == me){
-        html += '<strong><p id="player' + i + 'name">Player ' + i +': ' + players[i-1].name + '</p></strong>';
+        html += '<strong><p id="player' + i + 'name">' + i +': ' + players[i-1].name + '</p></strong>';
       }else{
-        html += '<p id="player' + i + 'name">Player ' + i +': ' + players[i-1].name + '</p>';
+        html += '<p id="player' + i + 'name">' + i +': ' + players[i-1].name + '</p>';
       }
     }else{
       html += '<p id="player' + i + 'name">...</p>';

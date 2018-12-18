@@ -131,12 +131,12 @@ function updatePlayers(data){
         var playerString = "#player" + (i + 1) + "name";
         if(typeof data.players[i] !== 'undefined') {
             if(i == data.me){
-                $(playerString).html("<strong>Player" + (i + 1) + ": " + data.players[i].name + "</strong>");
+                $(playerString).html("<strong>" + (i + 1) + ": " + data.players[i].name + "</strong>");
             }else{
-                $(playerString).html("Player" + (i + 1) + ": " + data.players[i].name);
+                $(playerString).html("" + (i + 1) + ": " + data.players[i].name);
             }
         }else{
-            $(playerString).html("Player" + (i + 1) + ": " +"...");
+            $(playerString).html("" + (i + 1) + ": " +"...");
         }
 
         if(turn == i+1){

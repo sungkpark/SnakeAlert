@@ -160,17 +160,29 @@ wss.on("connection", function(ws) {
                   let numRoll = Math.floor(Math.random() * 6) + 1;
                   sendEachPlayer(game, {action: "DICEROLL", numRoll: numRoll, player: game.turn, players: game.players, nPlayers: game.nPlayers});
                   //update player position
-                  player.position += numRoll;
+                  var before49 = true;
+                  for(var i=0; i<numRoll; i++){
+                    if((player.position)===49){
+                      before49=false;
+                    }
+                    if(before49){
+                      player.position++;
+                    }
+                    else{
+                      player.position--;
+                    }
+                  }
+                  
                   if(typeof board[player.position] !== 'undefined'){                                //check for ladders/snakes
                     player.position = board[player.position];
                   }else if(player.position == 49){
                     console.log("GAME END");                                                 //game won
                     gamesCompleted++;
-                    //let ms = 1000;                                                      //1 second + animation
-                    /*setTimeout(function(){*/                                                          //insures animation plays out first
+                    let ms = 1000;                                                      //1 second + animation
+                    setTimeout(function(){                                                        //insures animation plays out first
                       sendEachPlayer(game, {action: "WON_GAME", winnerName: player.name});         
                       delete games[gameID];
-                    /*}, ms);*/
+                    }, ms);
                   }
                   //update game turn
                   if(++game.turn == game.nPlayers){

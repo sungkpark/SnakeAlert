@@ -12,7 +12,6 @@ app.use(cookieParser());
 /* ---------- Setting up variables ---------- */
 var players = {};         //Object with all players/connections
 var games = {};           //Object with all games
-
 var board = {4: 18, 13: 28, 15: 1, 24: 39, 26: 12, 35: 10, 40: 25, 45: 29, 42: 44, 48: 34};
 
 //Stats variables
@@ -163,18 +162,20 @@ wss.on("connection", function(ws) {
                 player.position += numRoll;
                 if(typeof board[player.position] !== 'undefined'){                                //check for ladders/snakes
                   player.position = board[player.position];
-                }else if(player.position === 49){                                                 //game won
+                }else if(player.position == 49){
+                  console.log("GAME END");                                                 //game won
                   gamesCompleted++;
-                  let ms = numRoll*100+1000;                                                      //1 second + animation
+                  let ms = 1000;                                                      //1 second + animation
                   setTimeout(function(){                                                          //insures animation plays out first
-                    sendEachPlayer(game, {action: "WON_GAME", winnerName: player.name});
+                    sendEachPlayer(game, {action: "WON_GAME", winnerName: player.name});         
+                    delete games[gameID];
                   }, ms);
-                  delete games[gameID];
                 }
                 //update game turn
                 if(++game.turn == game.nPlayers){
                   game.turn = 0;
-                }  
+                }
+                console.log(player.position);
               }
               break;
         }

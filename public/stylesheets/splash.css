@@ -1,9 +1,6 @@
-html *
-{
-   color: #000 !important;
+html *{
    font-family: Arial !important;
    text-align: center;
-
 }
 
 .humanOrBot {

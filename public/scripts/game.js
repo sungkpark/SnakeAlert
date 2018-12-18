@@ -1,4 +1,5 @@
 var status = "SPLASH";
+var turn = 1;
 
 var socket = new WebSocket("ws://" + window.location.hostname + ":3000");
 socket.onmessage = function(event){
@@ -16,15 +17,7 @@ socket.onmessage = function(event){
             $("#gameID").html("Game ID: " + data.gID);
 
         case "UPDATE_PLAYERS":
-            $("#playerConnected").html("Players connected: " + data.players.length + "/" + data.nPlayers);
-            for(var i = 0; i < data.nPlayers; i++){
-                var playerString = "#player" + (i + 1) + "name";
-                if(typeof data.players[i] !== 'undefined') {
-                    $(playerString).html("Player" + (i + 1) + ": " + data.players[i].name);
-                }else{
-                    $(playerString).html("Player" + (i + 1) + ": " +"...");
-                }
-            }
+            updatePlayers(data);
             break;
 
         case "START_GAME":
@@ -46,6 +39,7 @@ socket.onmessage = function(event){
 
         case "DICEROLL":
             changeImg(data.player, data.numRoll);
+            changeTurn(data);
             break;
     }
 }
@@ -122,3 +116,31 @@ function getCookie(cname) {
     }
     return "";
   }
+
+function changeTurn(data){
+    turn++;
+    if(turn > currentPosition.length){
+        turn = 1;
+    }
+    updatePlayers(data);
+}
+
+function updatePlayers(data){
+    $("#playerConnected").html("Players connected: " + data.players.length + "/" + data.nPlayers);
+    for(var i = 0; i < data.nPlayers; i++){
+        var playerString = "#player" + (i + 1) + "name";
+        if(typeof data.players[i] !== 'undefined') {
+            if(i == data.me){
+                $(playerString).html("<strong>Player" + (i + 1) + ": " + data.players[i].name + "</strong>");
+            }else{
+                $(playerString).html("Player" + (i + 1) + ": " + data.players[i].name);
+            }
+        }else{
+            $(playerString).html("Player" + (i + 1) + ": " +"...");
+        }
+
+        if(turn == i+1){
+            $(playerString).append("🎲");
+        }
+    }
+}

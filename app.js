@@ -87,7 +87,7 @@ wss.on("connection", function(ws) {
               {
                 gameID: gameID,
                 pConnected: game.players.length,
-                playerInformation: generatePlayerInformation(game.nPlayers, game.players)
+                playerInformation: generatePlayerInformation(game.nPlayers, game.players, game.players.length)
               },
               function(err, html) {
                 const stats = {
@@ -113,11 +113,12 @@ wss.on("connection", function(ws) {
                 };
                 ws.gameID = gameID;
 
-                for(let i = 0; i < game.players.length - 1; i++){
+                for(let i = 0; i < game.players.length; i++){
                   const stats = {
                     action: "UPDATE_PLAYERS",
                     players: game.players,
-                    nPlayers: game.nPlayers
+                    nPlayers: game.nPlayers,
+                    me: i
                   };
                   const json = JSON.stringify(stats);
                   players[game.players[i].id].send(json);
@@ -128,7 +129,7 @@ wss.on("connection", function(ws) {
                   {
                     gameID: gameID,
                     pConnected: game.players.length,
-                    playerInformation: generatePlayerInformation(game.nPlayers, game.players)
+                    playerInformation: generatePlayerInformation(game.nPlayers, game.players, game.players.length)
                   },
                     function(err, html) {
                       const stats = {
@@ -157,7 +158,7 @@ wss.on("connection", function(ws) {
               if(player.id == ws.id && game.status == "PLAYING"){
                 //roll the dice
                 let numRoll = Math.floor(Math.random() * 6) + 1;
-                sendEachPlayer(game, {action: "DICEROLL", numRoll: numRoll, player: game.turn});
+                sendEachPlayer(game, {action: "DICEROLL", numRoll: numRoll, player: game.turn, players: game.players, nPlayers: game.nPlayers});
                 //update player position
                 player.position += numRoll;
                 if(typeof board[player.position] !== 'undefined'){                                //check for ladders/snakes
@@ -202,11 +203,15 @@ wss.on("connection", function(ws) {
 
 server.listen(port);
 
-function generatePlayerInformation(nPlayers, players){
+function generatePlayerInformation(nPlayers, players, me){
   let html = "";
   for(let i = 1; i <= nPlayers; i++){
     if(i <= players.length){
-      html += '<p id="player' + i + 'name">Player ' + i +': ' + players[i-1].name + '</p>';
+      if(i == me){
+        html += '<strong><p id="player' + i + 'name">Player ' + i +': ' + players[i-1].name + '</p></strong>';
+      }else{
+        html += '<p id="player' + i + 'name">Player ' + i +': ' + players[i-1].name + '</p>';
+      }
     }else{
       html += '<p id="player' + i + 'name">...</p>';
     }

@@ -1,8 +1,3 @@
-html * {
-   color: black;
-   font-family: Arial !important;
-}
-
 .GG {
     position: absolute;
     right: 20em;
@@ -52,4 +47,34 @@ td {
 
 .gameBoard {
   vertical-align: bottom;
+}
+
+#players{
+  margin: auto;
+  background-color:white;
+  border: 2px;
+  border-style: solid;
+  border-color: orange;
+  width: 500px;
+  padding: 10px;
+}
+
+#player1name {
+  text-align: left;
+  color:green;
+}
+
+#player2name {
+  text-align: left;
+  color:red;
+}
+
+#player3name {
+  color:purple;
+  text-align: left;
+}
+
+#player4name {
+  text-align: left;
+  color:blue;
 }

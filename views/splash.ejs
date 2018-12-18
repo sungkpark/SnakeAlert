@@ -14,14 +14,14 @@
 </head>
 <body>
     <h1 align="center">Snakes & Ladders</h1>
-    <section>  
+    <section>
         <h2 align="center">Name</h2>
         <input type="text" id="pName" />
     </section>
     <section>
 
         <h2 align="center">Number of players</h2>
-        <div class="numPlayers"> 
+        <div class="numPlayers">
             <input type="radio" name="numPlayers" value="2" id="radio2" checked="true"><font size="10">II</font></input type="radio">
             <input type="radio" name="numPlayers" value="3" id="radio3"><font size="10">III</font></input type="radio">
             <input type="radio" name="numPlayers" value="4" id="radio4"><font size="10">IV</font></input type="radio">
@@ -30,13 +30,13 @@
     <br><br><br><br><br>
     <section>
         <div align="center">
-            <input type="submit" value="Create game" onclick="createGame()" />
+            <input type="submit" id="gameButton" value="Create game" onclick="createGame()" />
         </div>
     </section>
     <section>
         <h2 align="center">Game ID</h2>
         <input type="text" id="gameID" />
-        <input type="submit" value="Join game" onclick="joinGame()" />
+        <input type="submit" id="gameButton" value="Join game" onclick="joinGame()" />
     </section>
     <br>
     <section>

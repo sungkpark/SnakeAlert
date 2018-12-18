@@ -36,10 +36,14 @@ td {
 }
 
 #dice {
-  position: absolute;
+  position: fixed;
   right: 20em;
-  bottom: 0;
+  top: 20em;
   padding:.3em;
+}
+
+#dice:hover {
+  background-color: grey;
 }
 
 .start {

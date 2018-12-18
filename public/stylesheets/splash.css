@@ -1,6 +1,5 @@
 html *
 {
-   font-size: 1em !important;
    color: #000 !important;
    font-family: Arial !important;
    text-align: center;
@@ -19,4 +18,31 @@ html *
 
 body {
   background-image: url("../images/adventure.gif");
+}
+
+@keyframes example {
+  from {
+    background-color: red;
+  }
+  to {
+    background-color: yellow;
+  }
+}
+
+#gameButton:hover {
+  background-color: red;
+  width: 140px;
+  height: 40px;
+}
+
+#gameButton {
+  transition: width 5s;
+  transition: height 4s;
+  animation-name: example;
+  animation-duration: 4s;
+  animation-iteration-count: 10;
+}
+
+#fs-toggle:not(:fullscreen) {
+  background-color: black;
 }
